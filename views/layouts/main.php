@@ -19,7 +19,7 @@ endif;
 <div class="container">
 	<div class="sidebar">
 		<header>
-			<a href="<?php echo $base?>admin" class="sq-logo">
+			<a href="<?php echo $base ?>admin" class="sq-logo">
 				<h1>SQ Framework CMS</h1>
 			</a>
 		</header>
