@@ -1,1 +1,1 @@
-# SQ Admin Module
+# Sq Admin Module
