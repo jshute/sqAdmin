@@ -22,12 +22,12 @@ abstract class sqAdmin extends controller {
 	}
 	
 	public function init() {
-		$this->layout->modelName = url::get('model');
+		$this->layout->modelName = sq::request()->get('model');
 	}
 	
-	public function indexAction() {
-		if (url::get('model')) {
-			$this->layout->content = sq::model(url::get('model'))
+	public function indexAction($model = null) {
+		if (sq::request()->get('model')) {
+			$this->layout->content = sq::model($model)
 				->read();
 		} else {
 			$this->layout->content = null;
@@ -35,13 +35,13 @@ abstract class sqAdmin extends controller {
 	}
 	
 	public function createGetAction() {
-		$this->layout->content = sq::model(url::get('model'))->schema();
+		$this->layout->content = sq::model(sq::request()->get('model'))->schema();
 	}
 	
 	public function createPostAction() {
-		$model = sq::model(url::get('model'));
+		$model = sq::model(sq::request()->get('model'));
 		
-		$save = $this->cleanInput(url::post('save', false));
+		$save = $this->cleanInput(sq::request()->post('save', false));
 		
 		if (isset($save['id-field'])) {
 			$idField = $save['id-field'];
@@ -50,10 +50,10 @@ abstract class sqAdmin extends controller {
 		
 		$model->set($save);
 		
-		if (is_array(url::post('model'))) {
-			foreach (url::post('model') as $inline) {
+		if (is_array(sq::request()->post('model'))) {
+			foreach (sq::request()->post('model') as $inline) {
 				$inlineModel = sq::model($inline)
-					->set(url::post($inline))
+					->set(sq::request()->post($inline))
 					->create();
 				
 				$model->$idField = $inlineModel->id;
@@ -62,16 +62,16 @@ abstract class sqAdmin extends controller {
 		
 		$model->create();
 		
-		sq::redirect(sq::base().'admin/'.url::get('model'));
+		sq::redirect(sq::base().'admin/'.sq::request()->get('model'));
 	}
 	
 	public function updateAction() {
-		$model = sq::model(url::get('model'));
+		$model = sq::model(sq::request()->get('model'));
 		$model->options['load-relations'] = false;
-		$model->where(url::request('id'));
+		$model->where(sq::request()->any('id'));
 		
-		if (url::post()) {
-			$save = $this->cleanInput(url::post('save', false));
+		if (sq::request()->isPost) {
+			$save = $this->cleanInput(sq::request()->post('save', false));
 			
 			if (isset($save['id-field'])) {
 				$idField = $save['id-field'];
@@ -80,11 +80,11 @@ abstract class sqAdmin extends controller {
 			
 			$model->set($save);
 			
-			if (is_array(url::post('model'))) {
-				foreach (url::post('model') as $inline) {
+			if (is_array(sq::request()->post('model'))) {
+				foreach (sq::request()->post('model') as $inline) {
 					$inlineModel = sq::model($inline);
-					$inlineModel->where(url::request('id'));
-					$inlineModel->set(url::post($inline));
+					$inlineModel->where(sq::request()->any('id'));
+					$inlineModel->set(sq::request()->post($inline));
 					$inlineModel->update();
 					
 					if (isset($inlineModel->id)) {
@@ -94,7 +94,7 @@ abstract class sqAdmin extends controller {
 			}
 			
 			$model->update();
-			sq::redirect(sq::base().'admin/'.url::get('model'));
+			sq::redirect(sq::base().'admin/'.sq::request()->get('model'));
 		} else {
 			$model->read();
 			
@@ -103,13 +103,13 @@ abstract class sqAdmin extends controller {
 	}
 	
 	public function deleteAction() {
-		$model = sq::model(url::get('model'));
-		$model->where(url::get('id'));
+		$model = sq::model(sq::request()->get('model'));
+		$model->where(sq::request()->get('id'));
 		
-		if (url::post()) {
+		if (sq::request()->isPost) {
 			$model->delete();
 			
-			sq::redirect(sq::base().'admin/'.url::get('model'));
+			sq::redirect(sq::base().'admin/'.sq::request()->get('model'));
 		} else {
 			$model->read();
 			
@@ -118,9 +118,9 @@ abstract class sqAdmin extends controller {
 	}
 	
 	public function sortAction() {
-		$model = sq::model(url::get('model'));
+		$model = sq::model(sq::request()->get('model'));
 		
-		foreach (url::post('save') as $field => $data) {
+		foreach (sq::request()->post('save') as $field => $data) {
 			foreach ($data as $id => $value) {
 				if ($value && is_numeric($value)) {
 					$model->where($id);
@@ -130,11 +130,11 @@ abstract class sqAdmin extends controller {
 			}
 		}
 		
-		sq::redirect(sq::base().'admin/'.url::get('model'));
+		sq::redirect(sq::base().'admin/'.sq::request()->get('model'));
 	}
 	
 	private function cleanInput(array $input) {
-		foreach (sq::config(url::get('model').'/fields/form') as $field => $type) {
+		foreach (sq::config(sq::request()->get('model').'/fields/form') as $field => $type) {
 			foreach ($input as $key => $val) {
 				if ($key == $field && $type == 'date') {
 					$input[$key] = date('Y-m-d', strtotime($val));

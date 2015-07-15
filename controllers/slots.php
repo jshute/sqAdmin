@@ -22,11 +22,11 @@ class slots extends controller {
 	
 	public function updateAction() {
 		$slot = sq::model('sq_slots', array('layout' => 'admin/slots/edit'))
-			->where(url::request('id'))
+			->where(sq::request()->any('id'))
 			->read();
 		
-		if (url::post()) {
-			$content = url::post('content', false);
+		if (sq::request()->isPost) {
+			$content = sq::request()->post('content', false);
 			
 			if ($slot->type == 'image') {
 				if (isset($_FILES['file']) && $_FILES['file']['size'] > 0) {
@@ -40,7 +40,7 @@ class slots extends controller {
 					$content = $slot->content;
 				}
 				
-				$slot->alt_text = url::post('alt_text');
+				$slot->alt_text = sq::request()->post('alt_text');
 			}
 			
 			$slot->content = $content;
