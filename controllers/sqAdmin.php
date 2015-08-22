@@ -8,7 +8,7 @@ abstract class sqAdmin extends controller {
 			sq::controller('auth')->action($action);
 		}
 		
-		if (!$this->options['require-login'] || auth::check('admin')) {
+		if (!$this->options['require-login'] || sq::auth()->level == 'admin') {
 			return true;
 		} else {
 			return sq::view('admin/login');
