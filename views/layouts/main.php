@@ -10,8 +10,8 @@ self::script(asset::load('admin/main.js'));
 self::$favicon = asset::load('admin/favicon.ico');
 self::$head = '<meta name="viewport" content="initial-scale=1.0"/>';
 
-if (url::request('controller')):
-	$modelName = url::request('controller');
+if (sq::request()->any('controller')):
+	$modelName = sq::request()->any('controller');
 endif;
 
 ?>
@@ -48,9 +48,9 @@ endif;
 		<ul class="breadcrumbs">
 			<li id="show-nav"><a href="#show-nav">Show Nav</a></li>
 			<li><a href="<?php echo $base?>admin">Admin</a></li>
-			<?php if (url::get('action')): ?>
+			<?php if (sq::request()->get('action')): ?>
 				<li><a href="<?php echo $base?>admin/<?php echo $modelName?>"><?php echo ucwords($modelName) ?></a></li>
-				<li><span><?php echo ucwords(url::get('action')) ?></span></li>
+				<li><span><?php echo ucwords(sq::request()->get('action')) ?></span></li>
 			<?php else: ?>
 				<li><span><?php echo ucwords($modelName) ?></span></li>
 			<?php endif ?>

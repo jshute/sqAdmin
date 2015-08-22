@@ -24,7 +24,7 @@ class slots extends controller {
 		$slot = sq::model('sq_slots', array('layout' => 'admin/slots/edit'))
 			->find($id);
 		
-		if (sq::request()->isPostRequest) {
+		if (sq::request()->isPost) {
 			$content = sq::request()->post('content');
 			
 			if ($slot->type == 'image') {
@@ -45,7 +45,7 @@ class slots extends controller {
 			$slot->content = $content;
 			$slot->update();
 			
-			sq::redirect(sq::base().'admin/slots');
+			sq::response()->redirect(sq::base().'admin/slots');
 		} else {
 			$this->layout->content = $slot;
 		}
