@@ -46,7 +46,7 @@ class slots extends controller {
 			$slot->content = $content;
 			$slot->update();
 			
-			sq::redirect(sq::base().'admin/slots');
+			sq::response()->redirect(sq::base().'admin/slots');
 		} else {
 			$this->layout->content = $slot;
 		}

@@ -62,7 +62,7 @@ abstract class sqAdmin extends controller {
 		
 		$model->create();
 		
-		sq::redirect(sq::base().'admin/'.sq::request()->get('model'));
+		sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
 	}
 	
 	public function updateAction() {
@@ -94,7 +94,7 @@ abstract class sqAdmin extends controller {
 			}
 			
 			$model->update();
-			sq::redirect(sq::base().'admin/'.sq::request()->get('model'));
+			sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
 		} else {
 			$model->read();
 			
@@ -109,7 +109,7 @@ abstract class sqAdmin extends controller {
 		if (sq::request()->isPost) {
 			$model->delete();
 			
-			sq::redirect(sq::base().'admin/'.sq::request()->get('model'));
+			sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
 		} else {
 			$model->read();
 			
@@ -130,7 +130,7 @@ abstract class sqAdmin extends controller {
 			}
 		}
 		
-		sq::redirect(sq::base().'admin/'.sq::request()->get('model'));
+		sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
 	}
 	
 	private function cleanInput(array $input) {
