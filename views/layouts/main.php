@@ -49,10 +49,10 @@ endif;
 			<li id="show-nav"><a href="#show-nav">Show Nav</a></li>
 			<li><a href="<?php echo $base?>admin">Admin</a></li>
 			<?php if (url::get('action')): ?>
-				<li><a href="<?php echo $base?>admin/<?php echo $modelName?>"><?php echo ucwords($modelName)?></a></li>
-				<li><span><?php echo ucwords(url::get('action'))?></span></li>
+				<li><a href="<?php echo $base?>admin/<?php echo $modelName?>"><?php echo ucwords($modelName) ?></a></li>
+				<li><span><?php echo ucwords(url::get('action')) ?></span></li>
 			<?php else: ?>
-				<li><span><?php echo ucwords($modelName)?></span></li>
+				<li><span><?php echo ucwords($modelName) ?></span></li>
 			<?php endif ?>
 		</ul>
 		<div class="main-content">

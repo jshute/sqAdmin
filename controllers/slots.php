@@ -20,13 +20,12 @@ class slots extends controller {
 			->read();
 	}
 	
-	public function updateAction() {
+	public function updateAction($id) {
 		$slot = sq::model('sq_slots', array('layout' => 'admin/slots/edit'))
-			->where(url::request('id'))
-			->read();
+			->find($id);
 		
-		if (url::post()) {
-			$content = url::post('content', false);
+		if (sq::request()->isPostRequest) {
+			$content = sq::request()->post('content');
 			
 			if ($slot->type == 'image') {
 				if (isset($_FILES['file']) && $_FILES['file']['size'] > 0) {
@@ -40,7 +39,7 @@ class slots extends controller {
 					$content = $slot->content;
 				}
 				
-				$slot->alt_text = url::post('alt_text');
+				$slot->alt_text = sq::request()->post('alt_text');
 			}
 			
 			$slot->content = $content;
