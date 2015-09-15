@@ -224,7 +224,7 @@ input[type=checkbox]:checked + label:before {
 content:"";
 background-image:url(checkmark.png);
 background-size:15px 15px;
-background-repeat:none;
+background-repeat:no-repeat;
 }
 
 input[type=checkbox] {
