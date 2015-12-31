@@ -1,21 +1,20 @@
 <?php
 
+$tinymce = sq::asset('admin/tinymce');
+
 self::$id = 'admin';
 self::style('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,700');
-self::style(asset::load('admin/main.css'));
-self::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
-self::script(asset::load('admin/tinymce').'/jquery.tinymce.min.js');
-self::script(asset::load('admin/main.js'));
+self::style(sq::asset('admin/main.css'));
 
-self::$favicon = asset::load('admin/favicon.ico');
+self::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+self::script($tinymce.'/jquery.tinymce.min.js');
+self::script(sq::asset('admin/main.js'));
+
+self::$favicon = sq::asset('admin/favicon.ico');
 self::$head = '<meta name="viewport" content="initial-scale=1.0"/>';
 
-if (sq::request()->any('controller')):
-	$modelName = sq::request()->any('controller');
-endif;
-
 ?>
-<script>var tinymcePath = "<?php echo asset::path('admin/tinymce') ?>";</script>
+<script>var tinymcePath = '<?=$tinymce ?>';</script>
 <div class="container">
 	<div class="sidebar">
 		<header>
