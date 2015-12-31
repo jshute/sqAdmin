@@ -26,9 +26,8 @@ abstract class sqAdmin extends controller {
 	}
 	
 	public function indexAction($model = null) {
-		if (sq::request()->get('model')) {
-			$this->layout->content = sq::model($model)
-				->read();
+		if ($model) {
+			$this->layout->content = sq::model($model)->paginate()->all();
 		} else {
 			$this->layout->content = null;
 		}
