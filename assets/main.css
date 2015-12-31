@@ -31,7 +31,7 @@ p {
 margin:.7em 0;
 }
 
-button,.action,input[type=submit],.sidebar,.main-content,.breadcrumbs {
+button,.sq-action,input[type=submit],.sidebar,.main-content,.breadcrumbs {
 -webkit-transition-timing-function:ease-in-out;
 -moz-transition-timing-function:ease-in-out;
 -ms-transition-timing-function:ease-in-out;
@@ -56,7 +56,7 @@ border-top:1px solid #C83038;
 border-bottom:1px solid #C83038;
 }
 
-.action:focus,button:focus,input[type=submit]:focus {
+.sq-action:focus,button:focus,input[type=submit]:focus {
 outline:2px solid #C83038;
 }
 
@@ -244,7 +244,7 @@ padding:.3em .5em;
 line-height:110%;
 }
 
-.list-actions {
+.sq-list-actions {
 line-height:150%;
 }
 
@@ -282,11 +282,7 @@ border:1px solid #DDD;
 margin-bottom:.4em;
 }
 
-.inline-actions {
-min-width:125px;
-}
-
-.replace-image {
+.sq-replace-image {
 clear:both;
 font-size:1em;
 color:#777;
@@ -359,15 +355,15 @@ margin:0;
 height:7.5em;
 }
 
-.listing-actions {
-position:fixed;
-top:.2em;
-z-index:10;
-right:1.4em;
+.sq-list-actions {
+float: right;
+position: fixed;
+top: 3.5em;
+right: 1.5em;
 }
 
-input[type=submit],.action,button {
-padding:.3rem 1rem;
+input[type=submit],.sq-action,button {
+padding:.3rem .75rem;
 text-decoration:none;
 cursor:pointer;
 border:0;
@@ -385,19 +381,19 @@ padding:0;
 border:0;
 }
 
-input[type=submit]:hover,.action:hover,button:hover {
+input[type=submit]:hover,.sq-action:hover,button:hover {
 background:#476790;
 }
 
-.inline-actions input[type=submit],.action {
+.sq-action {
 margin:.2rem;
 }
 
-.list-action {
+.sq-list-action {
 float:right;
 }
 
-.delete-action {
+.sq-delete-action {
 background:#C83038;	
 }
 
@@ -405,7 +401,7 @@ input[type=submit].destructive {
 background:#C83038;
 }
 
-.delete-action:hover,input[type=submit].destructive:hover {
+.sq-delete-action:hover,input[type=submit].destructive:hover {
 background:#A81018;
 }
 
@@ -429,19 +425,18 @@ display:none;
 	left:-85%;
 	}
 	
-	.global-actions {
-	position:absolute;
-	z-index:10;
-	}
-	
 	.breadcrumbs {
 	position:fixed;
 	left:0;
 	z-index:20;
 	}
 	
-	.list-actions {
+	.sq-list-actions {
+	position:absolute;
+	z-index:10;
 	padding-right:0;
+	top:3.45em;
+	right:.5em;
 	}
 	
 	.content {
@@ -504,11 +499,6 @@ display:none;
 	transform:translateX(100%);
 	position:relative;
 	}
-	
-	.global-actions {
-	top:3.45em;
-	right:.5em;
-	}
 
 	tr td:nth-child(4),tr th:nth-child(4) {
 	display:none;
@@ -553,7 +543,7 @@ display:none;
 	display:none;
 	}
 	
-	tr td.list-actions,tr th.list-actions {
+	tr td.sq-inline-actions,tr th.sq-inline-actions {
 	display:table-cell;
 	}
 	
