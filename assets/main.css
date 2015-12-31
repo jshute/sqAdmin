@@ -500,7 +500,7 @@ input[type=submit].destructive {
 		position: relative;
 	}
 
-	tr td: nth-child(4), tr th: nth-child(4) {
+	tr td:nth-child(4), tr th:nth-child(4) {
 		display: none;
 	}
 	
@@ -535,11 +535,11 @@ input[type=submit].destructive {
 		width: 10px;
 	}
 	
-	tr td: nth-child(2), tr th: nth-child(2) {
+	tr td:nth-child(2), tr th:nth-child(2) {
 		display: none;
 	}
 	
-	tr td: nth-child(5), tr th: nth-child(5) {
+	tr td:nth-child(5), tr th:nth-child(5) {
 		display: none;
 	}
 	
