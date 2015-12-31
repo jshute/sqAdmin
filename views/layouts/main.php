@@ -1,4 +1,4 @@
-<?php
+<?
 
 $tinymce = sq::asset('admin/tinymce');
 
@@ -18,12 +18,12 @@ self::$head = '<meta name="viewport" content="initial-scale=1.0"/>';
 <div class="container">
 	<div class="sidebar">
 		<header>
-			<a href="<?php echo $base ?>admin" class="sq-logo">
+			<a href="<?=$base ?>admin" class="sq-logo">
 				<h1>SQ Framework CMS</h1>
 			</a>
 		</header>
 		<nav>
-	<?php foreach (sq::config('admin/nav') as $name => $link):
+	<? foreach (sq::config('admin/nav') as $name => $link):
 		if (is_int($name)):
 			echo '<span>'.$link.'</span>';
 		else:
@@ -46,16 +46,16 @@ self::$head = '<meta name="viewport" content="initial-scale=1.0"/>';
 	<div class="content">
 		<ul class="breadcrumbs">
 			<li id="show-nav"><a href="#show-nav">Show Nav</a></li>
-			<li><a href="<?php echo $base?>admin">Admin</a></li>
-			<?php if (sq::request()->get('action')): ?>
-				<li><a href="<?php echo $base?>admin/<?php echo $modelName?>"><?php echo ucwords($modelName) ?></a></li>
-				<li><span><?php echo ucwords(sq::request()->get('action')) ?></span></li>
-			<?php else: ?>
-				<li><span><?php echo ucwords($modelName) ?></span></li>
-			<?php endif ?>
+			<li><a href="<?=$base?>admin">Admin</a></li>
+			<? if (sq::request()->get('action')): ?>
+				<li><a href="<?=$base?>admin/<?=$modelName?>"><?=ucwords($modelName) ?></a></li>
+				<li><span><?=ucwords(sq::request()->get('action')) ?></span></li>
+			<? else: ?>
+				<li><span><?=ucwords($modelName) ?></span></li>
+			<? endif ?>
 		</ul>
 		<div class="main-content">
-			<?php echo $content?>
+			<?=$content ?>
 			<footer>
 				<small>SQ Framework CMS. Part of the SQ Framework.</small>
 			</footer>
