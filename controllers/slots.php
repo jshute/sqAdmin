@@ -21,7 +21,9 @@ class slots extends controller {
 	
 	public function indexAction() {
 		sq::load('/defaults/slot');
-		$this->layout->content = sq::model('sq_slots')->read();
+		$this->layout->content = sq::model('sq_slots', array(
+			'title' => 'Slots'
+		))->read();
 	}
 	
 	public function updateAction($id) {

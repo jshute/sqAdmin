@@ -33,72 +33,24 @@ abstract class sqAdmin extends controller {
 		}
 	}
 	
-	public function createGetAction() {
-		$this->layout->content = sq::model(sq::request()->get('model'))->schema();
+	public function createGetAction($model) {
+		$this->layout->content = sq::model($model)->schema();
 	}
 	
-	public function createPostAction() {
-		$model = sq::model(sq::request()->get('model'));
-		
-		$save = $this->cleanInput(sq::request()->post('save', false));
-		
-		if (isset($save['id-field'])) {
-			$idField = $save['id-field'];
-			unset($save['id-field']);
-		}
-		
-		$model->set($save);
-		
-		if (is_array(sq::request()->post('model'))) {
-			foreach (sq::request()->post('model') as $inline) {
-				$inlineModel = sq::model($inline)
-					->set(sq::request()->post($inline))
-					->create();
-				
-				$model->$idField = $inlineModel->id;
-			}
-		}
-		
-		$model->create();
+	public function createPostAction($model) {
+		sq::request()->model($model)->save();
+		sq::response()->redirect(sq::base().'admin/'.$model);
 		
 		sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
 	}
 	
-	public function updateAction() {
-		$model = sq::model(sq::request()->get('model'));
-		$model->options['load-relations'] = false;
-		$model->where(sq::request()->any('id'));
-		
-		if (sq::request()->isPost) {
-			$save = $this->cleanInput(sq::request()->post('save', false));
-			
-			if (isset($save['id-field'])) {
-				$idField = $save['id-field'];
-				unset($save['id-field']);
-			}
-			
-			$model->set($save);
-			
-			if (is_array(sq::request()->post('model'))) {
-				foreach (sq::request()->post('model') as $inline) {
-					$inlineModel = sq::model($inline);
-					$inlineModel->where(sq::request()->any('id'));
-					$inlineModel->set(sq::request()->post($inline));
-					$inlineModel->update();
-					
-					if (isset($inlineModel->id)) {
-						$model->$idField = $inlineModel->id;
-					}
-				}
-			}
-			
-			$model->update();
-			sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
-		} else {
-			$model->read();
-			
-			$this->layout->content = $model;
-		}
+	public function updatePostAction($model) {
+		sq::request()->model($model)->save();
+		sq::response()->redirect(sq::base().'admin/'.$model);
+	}
+	
+	public function updateGetAction($model, $id) {
+		$this->layout->content = sq::model($model)->find($id);
 	}
 	
 	public function deleteAction() {
