@@ -236,6 +236,7 @@ footer small {
 
 table {
 	overflow: auto;
+	width: 100%;
 	border-collapse: collapse;
 }
 
@@ -244,8 +245,8 @@ td, th {
 	line-height: 110%;
 }
 
-.sq-list-actions {
-	line-height: 150%;
+.sq-inline-actions a {
+	float: right;
 }
 
 th {
