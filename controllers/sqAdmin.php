@@ -15,12 +15,6 @@ abstract class sqAdmin extends controller {
 		}
 	}
 	
-	public function defaultAction($action = 'index') {
-		if ($action == 'password') {
-			$this->layout->content = sq::controller('auth')->action('password');
-		}
-	}
-	
 	public function init() {
 		$this->layout->modelName = sq::request()->get('model');
 	}
@@ -40,8 +34,6 @@ abstract class sqAdmin extends controller {
 	public function createPostAction($model) {
 		sq::request()->model($model)->save();
 		sq::response()->redirect(sq::base().'admin/'.$model);
-		
-		sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
 	}
 	
 	public function updatePostAction($model) {
@@ -53,9 +45,8 @@ abstract class sqAdmin extends controller {
 		$this->layout->content = sq::model($model)->find($id);
 	}
 	
-	public function deleteAction() {
-		$model = sq::model(sq::request()->get('model'));
-		$model->where(sq::request()->get('id'));
+	public function deleteAction($model, $id) {
+		$model = sq::model($model)->find($id);
 		
 		if (sq::request()->isPost) {
 			$model->delete();
@@ -66,6 +57,26 @@ abstract class sqAdmin extends controller {
 			
 			$this->layout->content = sq::view('admin/confirm', array('model' => $model));
 		}
+	}
+	
+	public function passwordGetAction($id) {
+		$users = sq::model('users')->find($id);
+		
+		return sq::view('admin/forms/password', array(
+			'model' => $users
+		));
+	}
+	
+	public function passwordPostAction($id, $password, $confirm, $model) {
+		if ($password != $confirm) {
+			sq::response()->flash('Passwords do not match.')->review();
+		}
+		
+		$users = sq::model('users')->find($id);
+		$users->{$this->options['password-field']} = auth::hash($password);
+		$users->update();
+		
+		sq::response()->redirect(sq::base().'admin/'.$model);
 	}
 	
 	public function sortAction() {

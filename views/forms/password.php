@@ -1,6 +1,7 @@
 <section class="form edit-form">
 	<h2>Change Password</h2>
-	<form method="post" action="<?php echo $base?>admin/users/password/<?php echo $model->id?>">
+	<?=form::flash() ?>
+	<?=form::open() ?>
 		<div class="form-block">
 			<label for="admin-new-password">New Password</label>
 			<input id="admin-new-password" type="password" name="password"/>
@@ -11,7 +12,7 @@
 		</div>
 		<div class="actions global-actions">
 			<input type="submit" name="button" value="Save"/>
-			<a class="cancel form-cancel" href="<?php echo $base?>admin/users">Cancel</a>
+			<a class="cancel form-cancel" href="<?=$base ?>admin/users">Cancel</a>
 		</div>
-	</form>
+	<?=form::close() ?>
 </section>
