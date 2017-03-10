@@ -94,18 +94,6 @@ abstract class sqAdmin extends controller {
 		
 		sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
 	}
-	
-	private function cleanInput(array $input) {
-		foreach (sq::config(sq::request()->get('model').'/fields/form') as $field => $type) {
-			foreach ($input as $key => $val) {
-				if ($key == $field && $type == 'date') {
-					$input[$key] = date('Y-m-d', strtotime($val));
-				}
-			}
-		}
-		
-		return $input;
-	}
 }
 
 ?>
