@@ -1,7 +1,7 @@
 <?php
 
 // Load checkmark image into assets folder
-asset::load('admin/checkmark.png');
+sq::asset('admin/checkmark.png');
 
 self::$title = 'Admin | Login';
 self::$head = '
@@ -10,8 +10,8 @@ self::$head = '
 	<meta name ="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width"/>
 ';
 
-self::$favicon = asset::load('admin/favicon.ico');
-self::style(asset::load('admin/login.css'));
+self::$favicon = sq::asset('admin/favicon.ico');
+self::style(sq::asset('admin/login.css'));
 
 ?>
 <form action="<?php echo $base?>admin/pages" method="post">
