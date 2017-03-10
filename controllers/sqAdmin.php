@@ -62,7 +62,7 @@ abstract class sqAdmin extends controller {
 	public function passwordGetAction($id) {
 		$users = sq::model('users')->find($id);
 		
-		return sq::view('admin/forms/password', array(
+		$this->layout->content = sq::view('admin/forms/password', array(
 			'model' => $users
 		));
 	}
@@ -73,7 +73,7 @@ abstract class sqAdmin extends controller {
 		}
 		
 		$users = sq::model('users')->find($id);
-		$users->{$this->options['password-field']} = auth::hash($password);
+		$users->password = auth::hash($password);
 		$users->update();
 		
 		sq::response()->redirect(sq::base().'admin/'.$model);
