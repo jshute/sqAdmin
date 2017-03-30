@@ -55,16 +55,16 @@ abstract class sqAdmin extends controller {
 		} else {
 			$model->read();
 			
-			$this->layout->content = sq::view('admin/confirm', array('model' => $model));
+			$this->layout->content = sq::view('admin/confirm', ['model' => $model]);
 		}
 	}
 	
 	public function passwordGetAction($id) {
 		$users = sq::model('users')->find($id);
 		
-		$this->layout->content = sq::view('admin/forms/password', array(
+		$this->layout->content = sq::view('admin/forms/password', [
 			'model' => $users
-		));
+		]);
 	}
 	
 	public function passwordPostAction($id, $password, $confirm, $model) {

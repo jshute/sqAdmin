@@ -21,9 +21,9 @@ class slots extends controller {
 	
 	public function indexAction() {
 		sq::load('/defaults/slot');
-		$this->layout->content = sq::model('sq_slots', array(
+		$this->layout->content = sq::model('sq_slots', [
 			'title' => 'Slots'
-		))->read();
+		])->read();
 	}
 	
 	public function updateAction($id) {
@@ -38,7 +38,7 @@ class slots extends controller {
 					$ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 					$ext = '.'.strtolower($ext);
 					
-					sq::model('files', array('variations' => array()))
+					sq::model('files', ['variations' => []])
 						->upload($_FILES['file'], 'slots/', $slot->id.$ext);
 					$content = 'uploads/slots/'.$slot->id.$ext;
 				} else {

@@ -4,21 +4,21 @@
  * Admin module defaults
  */
 
-return array(
-	'admin' => array(
+return [
+	'admin' => [
 		
 		// Sidebar navigation in the form of title => url. Single entries format
 		// to non-link section headings.
-		'nav' => array(
+		'nav' => [
 			'Manage',
 			'Users' => 'users',
 			'Logout' => 'users/logout'
-		),
+		],
 		
 		// Require login for access to admin section. False is useful for dev
 		// environments.
 		'require-login' => true
-	)
-);
+	]
+];
 
 ?>

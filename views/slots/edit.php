@@ -25,7 +25,7 @@ switch ($model->type):
 	case 'markdown':
 		echo '<div class="form-block">';
 		echo form::label('content', 'Content');
-		echo form::textarea('content', $model->content, array('class' => 'markdown-field'));
+		echo form::textarea('content', $model->content, ['class' => 'markdown-field']);
 		break;
 	case 'html':
 		echo '<div class="form-block">';
