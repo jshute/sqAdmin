@@ -28,7 +28,7 @@ abstract class sqAdmin extends controller {
 	}
 	
 	public function createGetAction($model) {
-		$this->layout->content = sq::model($model)->schema();
+		$this->layout->content = sq::model($model)->columns();
 	}
 	
 	public function createPostAction($model) {
