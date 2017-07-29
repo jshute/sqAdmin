@@ -79,12 +79,12 @@ abstract class sqAdmin extends controller {
 		sq::response()->redirect(sq::base().'admin/'.$model);
 	}
 	
-	public function sortAction() {
-		$model = sq::model(sq::request()->get('model'));
+	public function sortAction($model) {
+		$model = sq::model($model, ['debug' => true]);
 		
 		foreach (sq::request()->post('save') as $field => $data) {
 			foreach ($data as $id => $value) {
-				if ($value && is_numeric($value)) {
+				if (is_numeric($value)) {
 					$model->where($id);
 					$model->$field = $value;
 					$model->update();
