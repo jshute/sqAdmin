@@ -1,4 +1,4 @@
-<? foreach ($model->options['inline-actions'] as $key => $val):
+<?php foreach ($model->options['inline-actions'] as $key => $val):
 	$action = $val;
 	
 	if (is_int($key)) {

@@ -26,7 +26,7 @@ $(function() {
 	
 	var active = false;
 	
-	$('[id*="name"]').on('keyup', function(e) {
+	$('[id*="name"]').on('keyup', function() {
 		var $url = $('[id*="url"]');
 		if ($url.val() === '' && !active) {
 			active = true;
@@ -68,7 +68,7 @@ $(function() {
 	});
 	
 	var $selectedType = $('select[id*=type] option:selected');
-	$('select[id*=type]').on('change', function(e) {
+	$('select[id*=type]').on('change', function() {
 		var confirmText = 'Warning: Changing the page type will discard unsaved changes. Do you want to continue?';
 		if (confirm(confirmText)) {
 			location = location.pathname.split('?')[0] + '?type=' + $(this).val();
@@ -89,7 +89,7 @@ $(function() {
 		$(this).parents('.sq-picker').find('.sq-picker-input').val(value);
 	});
 	
-	$('form').on('submit', function(e) {
+	$('form').on('submit', function() {
 		$('.sq-picker').each(function() {
 			var IDs = [];
 			$(this).find('input[type=checkbox]:checked').each(function() {
