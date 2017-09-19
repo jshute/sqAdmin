@@ -16,33 +16,65 @@ abstract class sqAdmin extends controller {
 	}
 	
 	public function init() {
-		$this->layout->modelName = sq::request()->get('model');
+		$this->layout->model = sq::model(sq::request()->get('model'));
+		$this->layout->modelName = $this->layout->model->options['name'];
 	}
 	
 	public function indexAction($model = null) {
-		if ($model) {
-			$this->layout->content = sq::model($model)->paginate()->all();
+		$this->layout->view = 'admin/layouts/listing';
+		$modelName = $model;
+		
+		$model = sq::model($model);
+		if ($model->options['hierarchy']) {
+			$model->search(['pages_id' => null])->paginate()->hasMany($modelName);
+			
+			foreach ($model as $item) {
+				$item->{$this->layout->modelName}->hasMany($modelName);
+			}
 		} else {
-			$this->layout->content = null;
+			$model->paginate()->all();
 		}
+		
+		$this->layout->model = $model;
+		$this->layout->content = $model;
 	}
 	
-	public function createGetAction($model) {
-		$this->layout->content = sq::model($model)->columns();
+	public function createGetAction($model, $type = null) {
+		$model = sq::model($model)->columns();
+		
+		if (!$type) {
+			$type = $model->options['default-item-type'];
+		}
+		
+		$this->layout->view = 'admin/layouts/form';
+		$this->layout->content = $model->set('type', $type);
 	}
 	
 	public function createPostAction($model) {
-		sq::request()->model($model)->save();
-		sq::response()->redirect(sq::base().'admin/'.$model);
+		$model = sq::request()->model($model);
+		if ($model->validate()) {
+			$model->save();
+		}
+		sq::response()->redirect(sq::base().'admin/'.$model->options['name']);
 	}
 	
 	public function updatePostAction($model) {
-		sq::request()->model($model)->save();
-		sq::response()->redirect(sq::base().'admin/'.$model);
+		$model = sq::request()->model($model);
+		if ($model->validate()) {
+			$model->save();
+		}
+		sq::response()->redirect(sq::base().'admin/'.$model->options['name']);
 	}
 	
-	public function updateGetAction($model, $id) {
-		$this->layout->content = sq::model($model)->find($id);
+	public function updateGetAction($model, $id, $type = null) {
+		$model = sq::model($model)->find($id);
+		
+		if ($type) {
+			$model->set('type', $type);
+		}
+		
+		$this->layout->view = 'admin/layouts/form';
+		$this->layout->content = $model;
 	}
 	
 	public function deleteAction($model, $id) {

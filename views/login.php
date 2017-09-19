@@ -27,6 +27,6 @@ self::style(sq::asset('admin/login.css'));
 		<input type="text" autocorrect="off" autocapitalize="off" placeholder="Username" name="username"/>
 		<input type="password" placeholder="Password" name="password"/>
 		<input type="hidden" name="action" value="login"/>
-		<input type="submit" title="Login" name="button" value="&gt;"/>
+		<input type="submit" title="Login" name="button" value="&#12297;"/>
 	</div>
 </form>

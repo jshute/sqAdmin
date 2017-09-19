@@ -94,50 +94,6 @@ body::before {
 	background: #C83038;
 }
 
-.sq-logo {
-	display: block;
-	padding: 1.5em 1.5em .3em;
-	text-decoration: none;
-}
-
-.sq-logo::before, .sq-logo::after, .sq-logo h1::before {
-	content: "";
-	width: 2.5em;
-	height: 2.5em;
-	display: block;
-	position: absolute;
-	background: #333;
-}
-
-.sq-logo::before {
-	top: 1.5em;
-}
-
-.sq-logo::after {
-	top: 1.5em;
-	left: 4.5em;
-}
-
-.sq-logo h1::before {
-	top: 4.5em;
-	left: 1.5em;
-}
-
-.sq-logo:hover ::before, .sq-logo:focus ::before, .sq-logo:active ::before, 
-.sq-logo:hover::before, .sq-logo:focus::before, .sq-logo:active::before, 
-.sq-logo:hover::after, .sq-logo:focus::after, .sq-logo:active::after {
-	-moz-outline-style: none;
-	outline-style: none;
-	background: #C83038;
-}
-
-.sq-logo h1 {
-	color: #333;
-	font-size: 1em;
-	padding-top: 6.4em;
-	font-weight: normal;
-}
-
 .sidebar {
 	background: #FCFBF9;
 	border-right: 1px solid #DDD;
@@ -155,7 +111,7 @@ nav a {
 	display: block;
 	color: #333;
 	margin: .3em 0;
-	padding: 0 1.5em;
+	padding: 0 1.5rem;
 	text-decoration: none;
 	position: relative;
 }
@@ -169,7 +125,7 @@ nav span {
 	display: block;
 	width: 100%;
 	font-size: .9em;
-	padding: 1em .5em .1em;
+	padding: 1em 1.5rem .1em;
 }
 
 .content {
@@ -238,6 +194,18 @@ td, th {
 	line-height: 110%;
 }
 
+td:first-child, th:first-child {
+	padding-left: 0;
+}
+
+td:last-child, th:last-child {
+	padding-right: 0;
+}
+
+.sq-list, .sq-form {
+	margin-top: 1em;
+}
+
 .sq-inline-actions a {
 	float: right;
 }
@@ -289,21 +257,30 @@ label {
 	margin-top: .2em;
 }
 
-.form-block {
-	clear: both;
-}
-
-.field-block {
-	float: left;
-	overflow: auto;
-}
-
 input, textarea {
 	font-family: "Open Sans";
+	height: 30px;
 }
 
-input[type=checkbox], select {
-	margin-bottom: 1.8em;
+select {
+	margin-top: 6px;
+}
+
+input[type=checkbox] {
+	position: relative;
+	top: -1px;
+}
+
+.sq-form-row {
+	min-height: 45px;
+	padding-bottom: 1rem;
+}
+
+.sq-help-text {
+	float: left;
+	width: 85%;
+	font-size: .8em;
+	margin: .3em 0 1.8em 15%;
 }
 
 input[type=text], input[type=submit], input[type=password], input[type=email], input[type=date], button, textarea {
@@ -317,11 +294,6 @@ input[type=text], input[type=password], input[type=email], input[type=date], tex
 	padding: .2em;
 	box-shadow: inset 0 0 5px #EEE;
 	width: 35em;
-	margin-bottom: .5em;
-}
-
-input[type=file] {
-	margin-bottom: 1.5em;
 }
 
 input.currency {
@@ -331,7 +303,7 @@ input.currency {
 textarea {
 	width: 85%;
 	height: 15em;
-	padding: 1em;
+	padding: .5em;
 }
 
 .markdown-field {
@@ -340,24 +312,19 @@ textarea {
 	min-height: 450px;
 }
 
-td .sort {
-	width: 42px;
-	margin: 0;
-}
-
-.blurb {
+.sq-input-blurb {
 	height: 7.5em;
+	max-width: 700px;
+	resize: none;
 }
 
 .sq-list-actions {
 	float: right;
-	position: fixed;
-	top: 3.5em;
-	right: 1.5em;
 }
 
 input[type=submit], .sq-action, button {
-	padding: .3rem .75rem;
+	padding: 0 .75rem;
+	line-height: 30px;
 	text-decoration: none;
 	cursor: pointer;
 	border: 0;
@@ -368,6 +335,7 @@ input[type=submit], .sq-action, button {
 	display: inline-block;
 	color: #FFF;
 	margin: 1rem 0;
+	height: 30px;
 }
 
 input::-moz-focus-inner {
@@ -387,6 +355,10 @@ input[type=submit]:hover, .sq-action:hover, button:hover {
 	float: right;
 }
 
+.sq-sort-action {
+	margin: 1em 0 0;
+}
+
 .sq-delete-action {
 	background: #C83038;	
 }
@@ -399,7 +371,7 @@ input[type=submit].destructive {
 	background: #A81018;
 }
 
-.cancel, #show-nav {
+#show-nav {
 	display: none;
 }
 
@@ -555,6 +527,111 @@ input[type=submit].destructive {
 	}
 }
 
+.sq-sort-item, .sq-sort-item input {
+	width: 30px;
+	margin: 4px 0;
+}
+
+.sq-form-heading {
+	margin: 1.5em 0 1em;
+}
+
+.sq-cancel {
+	margin-left: 1em;
+}
+
+
+/*******************************************************************************
+ * Hierarchy Indentation
+ ******************************************************************************/
+
+
+.sq-indent td:first-child {
+	padding-left: 30px;
+}
+
+.sq-indent-2 td:first-child {
+	padding-left: 60px;
+}
+
+
+/*******************************************************************************
+ * Grid View
+ ******************************************************************************/
+
+.sq-grid {
+	overflow: auto;
+	padding: 15px 0;
+	margin: 0 -5px;
+}
+
+.sq-grid-item {
+	padding: 5px;
+	float: left;
+	position: relative;
+	padding-bottom: 25px;
+}
+
+.sq-grid-label {
+	position: absolute;
+	max-width: 100%;
+	height: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 5px;
+}
+
+.sq-grid-item svg {
+	height: 120px;
+	width: auto;
+	display: block;
+	padding: 15px;
+	background: #DDD;
+}
+
+.sq-grid-item img {
+	height: 120px;
+	display: block;
+}
+
+.sq-grid-item img.is-selected {
+	border: 5px solid #6a8aac;
+}
+
+.sq-picker .sq-grid {
+	margin: 0 -5px;
+}
+
+.sq-picker .sq-grid, .sq-picker .sq-list {
+	transition: all .2s ease-in-out;
+	max-height: 0;
+	overflow: hidden;
+	padding: 0;
+}
+
+.sq-picker.is-open .sq-grid, .sq-picker.is-open .sq-list {
+	max-height: 400px;
+	overflow: scroll;
+	margin: 15px -5px 30px;
+}
+
+.sq-picker.is-open .sq-list {
+	margin: 15px 0 30px;
+}
+
+.sq-picker-clear {
+	margin-left: 1em;
+}
+
+.sq-picker-toggle {
+	margin: 0;
+}
+
+.sq-picker .sq-list table {
+	margin: 0 0 0 15%;
+	width: 85%;
+}
+
 
 /*******************************************************************************
  * Pagination
@@ -592,4 +669,76 @@ input[type=submit].destructive {
 .sq-pagination .number.is-active a {
 	background: #DDD;
 	color: #333;
+}
+
+
+/*******************************************************************************
+ * Flashes (alerts)
+ ******************************************************************************/
+
+.sq-flash.error {
+	color: #c6323c;
+	padding-bottom: 15px;
+}
+
+
+/*******************************************************************************
+ * Logo
+ ******************************************************************************/
+
+.sq-logo {
+	display: block;
+	padding: 1.5em 1.5em .3em;
+	text-decoration: none;
+}
+
+.sq-logo-image img {
+	width: 100%;
+}
+
+.sq-logo-default::before, .sq-logo-default::after, .sq-logo-default h1::before {
+	content: "";
+	width: 2.5em;
+	height: 2.5em;
+	display: block;
+	position: absolute;
+	background: #333;
+}
+
+.sq-logo-default::before {
+	top: 1.5em;
+}
+
+.sq-logo-default::after {
+	top: 1.5em;
+	left: 4.5em;
+}
+
+.sq-logo-default h1::before {
+	top: 4.5em;
+	left: 1.5em;
+}
+
+.sq-logo-default:hover ::before,
+.sq-logo-default:focus ::before,
+.sq-logo-default:active ::before, 
+.sq-logo-default:hover::before,
+.sq-logo-default:focus::before,
+.sq-logo-default:active::before, 
+.sq-logo-default:hover::after,
+.sq-logo-default:focus::after,
+.sq-logo-default:active::after {
+	-moz-outline-style: none;
+	outline-style: none;
+	background: #C83038;
+}
+
+.sq-logo-default h1 {
+	padding-top: 6.4em;
+}
+
+.sq-logo h1 {
+	color: #333;
+	font-size: 1em;
+	font-weight: normal;
 }

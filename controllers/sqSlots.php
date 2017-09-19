@@ -1,19 +1,7 @@
 <?php
 
-class slots extends controller {
+class slots extends admin {
 	public $layout = 'admin/layouts/main';
-	
-	public function filter($action) {
-		if ($action == 'login' || $action == 'logout') {
-			sq::controller('auth')->action($action);
-		}
-		
-		if (!$this->options['require-login'] || sq::auth()->level == 'admin') {
-			return true;
-		} else {
-			return sq::view('admin/login');
-		}
-	}
 	
 	public function init() {
 		$this->layout->modelName = 'slots';
