@@ -188,7 +188,7 @@ abstract class sqAdmin extends controller {
 	/**
 	 * Loads the specified markdown file in a help page
 	 *
-	 * @param {string} page - The name of the markdown page to load from the
+	 * @param string $page The name of the markdown page to load from the
 	 * admin/help directory.
 	 */
 	public function helpAction($page = 'index.md') {
