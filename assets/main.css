@@ -24,7 +24,7 @@ p {
 	margin: .7em 0;
 }
 
-button, .sq-action, input[type=submit], .sidebar, .main-content, .breadcrumbs {
+button, .sq-action, input[type=submit], .sidebar, .main-content, .sq-breadcrumbs {
 	-webkit-transition-timing-function: ease-in-out;
 	-moz-transition-timing-function: ease-in-out;
 	-ms-transition-timing-function: ease-in-out;
@@ -145,44 +145,6 @@ footer small {
 	font-size: .9em;
 }
 
-.breadcrumbs {
-	position: fixed;
-	top: .4em;
-	list-style: none;
-	overflow: hidden;
-	background: #FCFBF9;
-	width: 100%;
-	z-index: 10;
-	border-bottom: 1px solid #DDD;
-	padding: 0 1.4em;
-}
-
-.breadcrumbs li {
-	display: inline-block;
-}
-
-.breadcrumbs li a, .breadcrumbs li span {
-	display: inline-block;
-	text-decoration: none;
-	padding: .25em .9em .3em .3em;
-}
-
-.breadcrumbs li a::after {
-	content: "";
-	position: absolute;
-	height: 40px;
-	top: -4px;
-	padding-right: .6em;
-	width: 1px;
-	-webkit-transform: rotate(25deg); 
-	-moz-transform: rotate(25deg); 
-	-o-transform: rotate(25deg);
-	-ms-transform: rotate(25deg);
-	transform: rotate(25deg); 
-	border-right: 1px solid #DDD;
-	display: inline-block;
-}
-
 table {
 	overflow: auto;
 	width: 100%;
@@ -204,6 +166,11 @@ td:last-child, th:last-child {
 
 .sq-list, .sq-form {
 	margin-top: 1em;
+}
+
+.sq-form-actions {
+	border-top: 1px solid #DDD;
+	margin-top: 2em;
 }
 
 .sq-inline-actions a {
@@ -278,9 +245,16 @@ input[type=checkbox] {
 
 .sq-help-text {
 	float: left;
+	display: block;
 	width: 85%;
 	font-size: .8em;
 	margin: .3em 0 1.8em 15%;
+}
+
+.sq-help-text:first-child {
+	width: 100%;
+	margin: 0 0 1.8em 0;
+	float: none;
 }
 
 input[type=text], input[type=submit], input[type=password], input[type=email], input[type=date], button, textarea {
@@ -360,7 +334,7 @@ input[type=submit]:hover, .sq-action:hover, button:hover {
 }
 
 .sq-delete-action {
-	background: #C83038;	
+	background: #C83038;
 }
 
 input[type=submit].destructive {
@@ -379,7 +353,7 @@ input[type=submit].destructive {
 	.sidebar {
 		width: 20%;
 	}
-	
+
 	.content {
 		width: 80%;
 	}
@@ -390,13 +364,13 @@ input[type=submit].destructive {
 		width: 85%;
 		left: -85%;
 	}
-	
+
 	.breadcrumbs {
 		position: fixed;
 		left: 0;
 		z-index: 20;
 	}
-	
+
 	.sq-list-actions {
 		position: absolute;
 		z-index: 10;
@@ -404,28 +378,28 @@ input[type=submit].destructive {
 		top: 3.45em;
 		right: .5em;
 	}
-	
+
 	.content {
 		float: none;
 		width: 100%;
 		position: relative;
 	}
-	
+
 	table {
-		min-width: 100%;	
+		min-width: 100%;
 	}
-	
+
 	.table-wrapper {
 		width: 100%;
 		overflow: auto;
 	}
-	
+
 	#show-nav {
 		display: block;
 		margin: 0 inherit;
 		pointer-events: auto;
 	}
-	
+
 	#show-nav a {
 		float: left;
 		width: 30px;
@@ -435,7 +409,7 @@ input[type=submit].destructive {
 		background: #333;
 		text-indent: -200px;
 	}
-	
+
 	#show-nav a::before {
 		content: "";
 		display: block;
@@ -446,19 +420,19 @@ input[type=submit].destructive {
 		left: -5px;
 		top: 4px;
 	}
-	
+
 	.open .container {
 		overflow-x: hidden;
 		width: 100%;
 	}
-	
+
 	.open .main-content, .open .breadcrumbs {
 		pointer-events: none;
 		-webkit-transform: translateX(85%);
 		-ms-transform: translateX(85%);
 		transform: translateX(85%);
 	}
-	
+
 	.open .sidebar {
 		-webkit-transform: translateX(100%);
 		-ms-transform: translateX(100%);
@@ -469,15 +443,15 @@ input[type=submit].destructive {
 	tr td:nth-child(4), tr th:nth-child(4) {
 		display: none;
 	}
-	
+
 	label {
 		width: 100%;
 	}
-	
+
 	label.blurb {
 		height: auto;
 	}
-	
+
 	input[type=text], input[type=password], input[type=email], textarea {
 		width: 100%;
 	}
@@ -487,40 +461,40 @@ input[type=submit].destructive {
 	section, footer {
 		padding: 2.8em .5em .5em;
 	}
-	
+
 	td, th {
 		padding: .2em;
 	}
-	
+
 	td {
 		word-wrap: break-word;
 		overflow: hidden;
 	}
-	
+
 	th {
 		width: 10px;
 	}
-	
+
 	tr td:nth-child(2), tr th:nth-child(2) {
 		display: none;
 	}
-	
+
 	tr td:nth-child(5), tr th:nth-child(5) {
 		display: none;
 	}
-	
+
 	tr td.sq-inline-actions, tr th.sq-inline-actions {
 		display: table-cell;
 	}
-	
+
 	h2 {
 		padding-right: .5rem;
 	}
-	
+
 	.breadcrumbs {
 		padding: 0 .5em;
 	}
-	
+
 	.inline-form {
 		margin: .5em 0 .5em;
 		padding: .5em;
@@ -533,7 +507,45 @@ input[type=submit].destructive {
 }
 
 .sq-form-heading {
-	margin: 1.5em 0 1em;
+	margin: 1em 0 .75em;
+}
+
+.sq-toggle {
+	cursor: pointer;
+}
+
+.sq-toggle + div {
+	overflow: hidden;
+	transition: all .3s ease-in-out;
+}
+
+.sq-toggle::after {
+	content: "";
+	border: solid #333;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+	padding: 3px;
+	margin-left: 5px;
+}
+
+.sq-toggle.is-open::after {
+	transform: rotate(-135deg);
+}
+
+.sq-toggle.is-closed::after {
+	transform: rotate(45deg);
+	position: relative;
+	top: -3px;
+}
+
+.sq-toggle.is-closed + div {
+	max-height: 0;
+	opacity: 0;
+}
+
+.sq-toggle.is-open + div {
+	max-height: 500px;
+	opacity: 1;
 }
 
 .sq-cancel {
@@ -541,9 +553,9 @@ input[type=submit].destructive {
 }
 
 
-/*******************************************************************************
+/******************************************************************************
  * Hierarchy Indentation
- ******************************************************************************/
+ *****************************************************************************/
 
 
 .sq-indent td:first-child {
@@ -555,9 +567,9 @@ input[type=submit].destructive {
 }
 
 
-/*******************************************************************************
+/******************************************************************************
  * Grid View
- ******************************************************************************/
+ *****************************************************************************/
 
 .sq-grid {
 	overflow: auto;
@@ -633,9 +645,9 @@ input[type=submit].destructive {
 }
 
 
-/*******************************************************************************
+/******************************************************************************
  * Pagination
- ******************************************************************************/
+ *****************************************************************************/
 
 .sq-pagination {
 	list-style: none;
@@ -672,19 +684,28 @@ input[type=submit].destructive {
 }
 
 
-/*******************************************************************************
+/******************************************************************************
  * Flashes (alerts)
- ******************************************************************************/
+ *****************************************************************************/
+
+.sq-flash {
+	margin-bottom: 1em;
+	padding: 1em;
+	background: #EEE;
+}
 
 .sq-flash.error {
 	color: #c6323c;
-	padding-bottom: 15px;
+}
+
+.sq-flash.success {
+	color: #6989ad;
 }
 
 
-/*******************************************************************************
+/******************************************************************************
  * Logo
- ******************************************************************************/
+ *****************************************************************************/
 
 .sq-logo {
 	display: block;
@@ -721,10 +742,10 @@ input[type=submit].destructive {
 
 .sq-logo-default:hover ::before,
 .sq-logo-default:focus ::before,
-.sq-logo-default:active ::before, 
+.sq-logo-default:active ::before,
 .sq-logo-default:hover::before,
 .sq-logo-default:focus::before,
-.sq-logo-default:active::before, 
+.sq-logo-default:active::before,
 .sq-logo-default:hover::after,
 .sq-logo-default:focus::after,
 .sq-logo-default:active::after {
@@ -741,4 +762,71 @@ input[type=submit].destructive {
 	color: #333;
 	font-size: 1em;
 	font-weight: normal;
+}
+
+
+/******************************************************************************
+ * Breadcrumbs
+ *****************************************************************************/
+
+.sq-breadcrumbs {
+	position: fixed;
+	top: .4em;
+	list-style: none;
+	overflow: hidden;
+	background: #FCFBF9;
+	width: 100%;
+	z-index: 10;
+	border-bottom: 1px solid #DDD;
+	padding: 0 1.4em;
+}
+
+.sq-breadcrumbs li {
+	display: inline-block;
+}
+
+.sq-breadcrumbs li a, .sq-breadcrumbs li span {
+	display: inline-block;
+	text-decoration: none;
+	padding: .25em .9em .3em .3em;
+}
+
+.sq-breadcrumbs li a::after {
+	content: "";
+	position: absolute;
+	height: 40px;
+	top: -4px;
+	padding-right: .6em;
+	width: 1px;
+	-webkit-transform: rotate(25deg);
+	-moz-transform: rotate(25deg);
+	-o-transform: rotate(25deg);
+	-ms-transform: rotate(25deg);
+	transform: rotate(25deg);
+	border-right: 1px solid #DDD;
+	display: inline-block;
+}
+
+
+/******************************************************************************
+ * Help Pages
+ *****************************************************************************/
+
+article {
+	max-width: 750px;
+	line-height: 1.5em;
+}
+
+article img {
+	max-width: 100%;
+}
+
+article h2, article h3, article h4 {
+	padding-top: .8em;
+}
+
+article .highlight {
+	margin: 1em 0 1.5em;
+	padding: 1em 1.5em;
+	background: #EEE;
 }

@@ -13,5 +13,7 @@ self::script(sq::asset('admin/main.js'));
 self::$favicon = sq::asset('admin/favicon.ico');
 self::$head = '<meta name="viewport" content="initial-scale=1.0"/>';
 
+self::$title = sq::config('admin/title');
+
 ?>
 <script>var tinymcePath = '<?=$tinymce ?>';</script>

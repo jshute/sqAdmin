@@ -21,10 +21,15 @@
 			$action = $key;
 			$display = $val;
 		endif;
-		
+
 		$url = sq::route()->current()->append([
 			'action' => $action
-		])->remove('page');
+		])->remove(['page', 'where', 'value']);
+
+		if (sq::request()->get('where') == 'type'):
+			$url .= '?type='.sq::request()->get('value');
+		endif;
+
 		echo '<a class="sq-action sq-'.$action.'-action" href="'.$url.'">'.$display.'</a>';
 	endforeach ?>
 </div>
