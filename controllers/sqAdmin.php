@@ -139,7 +139,10 @@ abstract class sqAdmin extends controller {
 		if (sq::request()->isPost) {
 			$model->delete();
 
-			sq::response()->redirect(sq::base().'admin/'.sq::request()->get('model'));
+			sq::response()->redirect(sq::route()->to([
+				'module' => 'admin',
+				'model' => sq::request()->get('model')
+			]));
 		} else {
 			$model->read();
 

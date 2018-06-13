@@ -69,5 +69,3 @@ abstract class sqFiles extends admin {
 		$this->layout->model = $files;
 	}
 }
-
-?>
