@@ -4,14 +4,13 @@ class slots extends admin {
 	public $layout = 'admin/layouts/main';
 
 	public function init() {
-		$this->layout->modelName = 'slots';
+		parent::init();
+
+		sq::load('/defaults/slot');
 	}
 
 	public function indexAction($model = null, $where = null, $value = null) {
-		sq::load('/defaults/slot');
-		$this->layout->content = sq::model('sq_slots', [
-			'title' => 'Slots'
-		])->read();
+		$this->layout->content = sq::model('sq_slots')->all();
 	}
 
 	public function updateAction($id) {
@@ -39,7 +38,9 @@ class slots extends admin {
 			$slot->content = $content;
 			$slot->update();
 
-			sq::response()->redirect(sq::base().'admin/slots');
+			sq::response()
+				->flash('Slot saved successfully', 'success')
+				->redirect(sq::base().'admin/slots');
 		} else {
 			$this->layout->content = $slot;
 		}

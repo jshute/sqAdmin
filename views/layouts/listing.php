@@ -2,16 +2,11 @@
 
 <? if (!sq::request()->isAjax): ?>
 
-<h2><?=
-	empty($model->options['title'])
-		? ucwords($model->options['name'])
-		: $model->options['title']
-?></h2>
-<span class="sq-list-count"><?=count($model) ?> Results</span>
-
-<?=sq::widget('pagination', [
-	'model' => $model
-]) ?>
+<h2><?=$model->getTitle(null, sq::request()->get('type')) ?></h2>
+<span class="sq-list-count">
+	<?=count($model) ?>
+	<?=view::pluralize(count($model), 'Item') ?>
+</span>
 
 <div class="sq-actions sq-list-actions">
 	<? foreach ($model->options['actions'] as $key => $val):
@@ -26,8 +21,8 @@
 			'action' => $action
 		])->remove(['page', 'where', 'value']);
 
-		if (sq::request()->get('where') == 'type'):
-			$url .= '?type='.sq::request()->get('value');
+		if (sq::request()->get('type')):
+			$url->append(['type' => sq::request()->get('type')]);
 		endif;
 
 		echo '<a class="sq-action sq-'.$action.'-action" href="'.$url.'">'.$display.'</a>';

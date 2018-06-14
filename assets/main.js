@@ -44,12 +44,21 @@ $(function() {
 		}
 	});
 
-	$('.sq-picker-toggle').on('click', function(e) {
+	$('button.sq-toggle').on('click', function(e) {
 		e.preventDefault();
+		$(this).toggleClass('is-open').toggleClass('is-closed');
 		$(this).parent('.sq-picker').toggleClass('is-open');
 	});
 
-	$cache.picker.on('click', 'img', function(e) {
+	// Picks the overal folder not just the image
+	$('.sq-pick').on('click', function(e) {
+		e.preventDefault();
+		$(this).parents('.sq-picker').children('input').val(
+			$(this).parents('.sq-picker').find('.sq-picker-path').data('path') || 'uploads'
+		);
+	});
+
+	$('.sq-picker-files').on('click', 'img', function(e) {
 		e.preventDefault();
 		$(this).parents('.sq-picker').find('img').removeClass('is-selected');
 		$(this).addClass('is-selected');
@@ -102,7 +111,20 @@ $(function() {
 		});
 	});
 
-	$('.sq-toggle').on('click', function() {
+	$('.sq-form-heading.sq-toggle').on('click', function() {
 		$(this).toggleClass('is-closed').toggleClass('is-open');
 	});
+
+	// @TODO Generalize this so it isn't hardcoded
+	if ($('.sq-galleries-form-page #sq-context-grid-content').length) {
+		sortable('.sq-galleries-form-page #sq-context-grid-content', {
+			items: '.sq-grid-item',
+			placeholderClass: 'sq-grid-placeholder'
+		})[0].addEventListener('sortupdate', function() {
+			var ids = $('.sq-grid-item').map(function() {
+				return $(this).data('id');
+			}).get();
+			$('#sort-keys').val(ids.reverse().join());
+		});
+	}
 });

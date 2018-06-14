@@ -8,6 +8,8 @@ self::style(sq::asset('admin/main.css'));
 
 self::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 self::script($tinymce.'/jquery.tinymce.min.js');
+self::script(sq::asset('admin/vendor/html5sortable.min.js'));
+sq::asset('admin/vendor/html5sortable.min.js.map');
 self::script(sq::asset('admin/main.js'));
 
 self::$favicon = sq::asset('admin/favicon.ico');

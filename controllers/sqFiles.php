@@ -7,7 +7,6 @@ abstract class sqFiles extends admin {
 		parent::init();
 
 		sq::widget('breadcrumbs')->add('Files', sq::route()->to([
-			'module' => 'admin',
 			'model' => 'files'
 		]));
 	}
@@ -21,7 +20,6 @@ abstract class sqFiles extends admin {
 	public function uploadPostAction($path = null) {
 		sq::model('files', ['path' => $path])->upload($_FILES['file']);
 		sq::response()->redirect([
-			'module' => 'admin',
 			'model' => 'files',
 			'controller' => 'files',
 			'path' => $path
@@ -39,14 +37,13 @@ abstract class sqFiles extends admin {
 			$path = sq::model('files')->options['path'];
 		}
 
-		$path = sq::root().$path.'/'.$folder;
-		if (file_exists($path)) {
+		$fullPath = sq::root().$path.'/'.$folder;
+		if (file_exists($fullPath)) {
 			sq::response()->flash('A folder with that name already exists.')->review();
 		}
 
-		if (mkdir($path)) {
+		if (mkdir($fullPath)) {
 			sq::response()->redirect([
-				'module' => 'admin',
 				'model' => 'files',
 				'controller' => 'files',
 				'path' => $path

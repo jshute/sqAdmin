@@ -32,8 +32,13 @@
 		'id' => $item->id
 	])->remove(['where', 'value', 'page']);
 
+	// @TODO Fix this hack
+	if ($item->options['name'] == 'extended_files') {
+		$url = sq::base().'admin/files/delete/?id='.$item->id;
+	}
+
 	if (sq::request()->get('where') == 'type'):
-		$url .= '?type='.sq::request()->get('value');
+		$url->append(['type' => sq::request()->get('value')]);
 	endif;
 
 	echo '<a href="'.$url.'" class="sq-action sq-'.$action['action'].'-action">'.$action['label'].'</a>';

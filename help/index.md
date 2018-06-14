@@ -66,6 +66,9 @@ Event Data
 
 ***The event edit screen contains all the same options as the information page type with the following additions...***
 
+#### Event Only ####
+When the box is checked the event will only show up on the homepage and won't be a full page on the website.
+
 #### Event Begin and End Dates
 The "begins" and "ends" dates must be inputted in MM/DD/YYYY format.
 

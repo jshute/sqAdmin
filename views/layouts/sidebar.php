@@ -1,6 +1,6 @@
 <div class="sidebar">
 	<header>
-		<a href="<?=$base ?>admin" class="sq-logo <?=sq::config('admin/logo') ? 'sq-logo-image' : 'sq-logo-default' ?>">
+		<a href="<?=sq::route()->to(['module' => 'admin']) ?>" class="sq-logo <?=sq::config('admin/logo') ? 'sq-logo-image' : 'sq-logo-default' ?>">
 			<? if (sq::config('admin/logo')): ?>
 				<img src="<?=sq::config('admin/logo') ?>" alt="<?=sq::config('admin/title') ?>"/>
 			<? elseif (sq::config('admin/title')): ?>

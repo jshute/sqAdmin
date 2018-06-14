@@ -15,9 +15,17 @@
 * {
 	margin: 0;
 	padding: 0;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+}
+
+::selection {
+	background: #C83038;
+	color: #FFF;
+}
+
+::-moz-selection {
+	background: #C83038;
+	color: #FFF;
 }
 
 p {
@@ -137,8 +145,12 @@ nav span {
 	-webkit-overflow-scrolling: touch;
 }
 
-section, footer {
-	padding: 3em 1.5em;
+section {
+	padding: 3rem 1.5rem;
+}
+
+footer {
+	padding: 1.5rem 1.5rem 5rem;
 }
 
 footer small {
@@ -169,8 +181,28 @@ td:last-child, th:last-child {
 }
 
 .sq-form-actions {
+	position: fixed;
+	background: #FCFBF9;
+	width: 85%;
+	padding: 0 1.5em;
+	bottom: 0;
+	left: 15%;
 	border-top: 1px solid #DDD;
-	margin-top: 2em;
+}
+
+@media screen and (max-width: 900px) {
+	.sq-form-actions {
+		left: 20%;
+		width: 80%;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.sq-form-actions {
+		position: static;
+		width: 100%;
+		padding: 0;
+	}
 }
 
 .sq-inline-actions a {
@@ -251,7 +283,7 @@ input[type=checkbox] {
 	margin: .3em 0 1.8em 15%;
 }
 
-.sq-help-text:first-child {
+.form-header .sq-help-text, .sq-help-text:first-child {
 	width: 100%;
 	margin: 0 0 1.8em 0;
 	float: none;
@@ -514,6 +546,10 @@ input[type=submit].destructive {
 	cursor: pointer;
 }
 
+button.sq-toggle {
+	margin: 0;
+}
+
 .sq-toggle + div {
 	overflow: hidden;
 	transition: all .3s ease-in-out;
@@ -526,15 +562,20 @@ input[type=submit].destructive {
     display: inline-block;
 	padding: 3px;
 	margin-left: 5px;
+	position: relative;
+}
+
+button.sq-toggle::after {
+	border-color: #FFF;
 }
 
 .sq-toggle.is-open::after {
 	transform: rotate(-135deg);
+	top: 1px;
 }
 
 .sq-toggle.is-closed::after {
 	transform: rotate(45deg);
-	position: relative;
 	top: -3px;
 }
 
@@ -577,11 +618,18 @@ input[type=submit].destructive {
 	margin: 0 -5px;
 }
 
-.sq-grid-item {
+.sq-grid-item, .sq-grid-placeholder {
 	padding: 5px;
 	float: left;
 	position: relative;
 	padding-bottom: 25px;
+}
+
+.sq-grid-placeholder {
+	height: 140px;
+	margin: 5px;
+	width: 100px;
+	background: #DDD;
 }
 
 .sq-grid-label {
@@ -607,7 +655,27 @@ input[type=submit].destructive {
 }
 
 .sq-grid-item img.is-selected {
-	border: 5px solid #6a8aac;
+	border: .4rem solid #6a8aac;
+}
+
+.sq-grid-item .sq-action {
+	pointer-events: none;
+	opacity: 0;
+	margin: 0;
+	position: absolute;
+	font-size: 0;
+	top: 5px;
+	right: 5px;
+}
+
+.sq-grid-item .sq-action::after {
+	content: "\00D7";
+	font-size: 1rem;
+}
+
+.sq-grid-item:hover .sq-action {
+	pointer-events: all;
+	opacity: 1;
 }
 
 .sq-picker .sq-grid {
@@ -635,13 +703,14 @@ input[type=submit].destructive {
 	margin-left: 1em;
 }
 
-.sq-picker-toggle {
-	margin: 0;
-}
-
 .sq-picker .sq-list table {
 	margin: 0 0 0 15%;
 	width: 85%;
+}
+
+.sq-picker .sq-list tr:hover {
+	background: #DDD;
+	cursor: pointer;
 }
 
 

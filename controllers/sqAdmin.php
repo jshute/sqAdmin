@@ -22,64 +22,51 @@ abstract class sqAdmin extends controller {
 
 		if (sq::request()->get('model')) {
 			$this->layout->model = sq::model(sq::request()->get('model'));
-			$this->layout->modelName = $this->layout->model->options['name'];
+			$this->layout->modelName = $this->layout->model->getTitle();
 		}
 	}
 
-	public function indexAction($model = null, $where = null, $value = null) {
-		$this->layout->view = 'admin/layouts/listing';
-		$modelName = $model;
+	public function indexAction() {
+		$modelName = sq::request()->get('model');
+		$type = sq::request()->get('type');
 
-		$model = sq::model($model);
-		if ($model->options['hierarchy'] && !$where) {
-			$model->search(['pages_id' => null])->paginate()->hasMany($modelName);
+		$this->layout->view = 'admin/layouts/listing';
+
+		$model = sq::model($modelName);
+
+		if ($model->options['hierarchy'] && !$type) {
+			$model->search(['pages_id' => null])->hasMany($modelName);
 
 			foreach ($model as $item) {
-				$item->{$this->layout->modelName}->hasMany($modelName);
+				$item->{$modelName}->hasMany($modelName);
+			}
+		} else {
+			if ($type) {
+				$model->order('name', 'ASC')->search(['type' => $type]);
+			} else {
+				$model->all();
 			}
 
-			sq::widget('breadcrumbs')->add(ucwords($this->layout->modelName), sq::route()->to([
-				'module' => 'admin',
-				'model' => $this->layout->modelName
-			]));
-		} else {
-			if ($where) {
-				if ($value == 'event') {
-					$model->options['fields']['list'] = [
-						'name' => 'text',
-						'begins' => 'date',
-						'ends' => 'date'
-					];
-
-					$model->options['title'] = 'Events';
-
-					sq::widget('breadcrumbs')->add('Events', sq::route()->to([
-						'module' => 'admin',
-						'model' => $this->layout->modelName
-					]).'?where=type&value=event');
-				}
-				if ($value == 'page') {
-					$model->options['fields']['list'] = [
-						'name' => 'text',
-						'description' => 'blurb'
-					];
-
-					$model->options['title'] = 'Information Pages';
-
-					sq::widget('breadcrumbs')->add('Information Pages', sq::route()->to([
-						'module' => 'admin',
-						'model' => $this->layout->modelName
-					]).'?where=type&value=page');
-				}
-				$model->order('name', 'ASC')->search([$where => $value]);
-			} else {
-				sq::widget('breadcrumbs')->add(ucwords($this->layout->modelName), sq::route()->to([
-					'module' => 'admin',
-					'model' => $this->layout->modelName
-				]));
-				$model->paginate()->all();
+			// @TODO Fix this hack
+			if ($type == 'event') {
+				$model->options['fields']['list'] = [
+					'name' => 'text',
+					'begins' => 'date',
+					'ends' => 'date'
+				];
+			} else if ($type == 'page') {
+				$model->options['fields']['list'] = [
+					'name' => 'text',
+					'description' => 'blurb'
+				];
 			}
 		}
+
+		$model->paginate();
+
+		$modelURL = $this->getModelURL($model, $type);
+		sq::widget('breadcrumbs')
+			->add($model->getTitle('plural', $type), $modelURL);
 
 		$this->layout->model = $model;
 		$this->layout->content = $model;
@@ -92,61 +79,97 @@ abstract class sqAdmin extends controller {
 			$type = $model->options['default-item-type'];
 		}
 
-		sq::widget('breadcrumbs')->add('Create');
+		$modelURL = $this->getModelURL($model, $type);
+		sq::widget('breadcrumbs')
+			->add($model->getTitle('plural', $type), $modelURL)
+			->add('Create');
 
 		$this->layout->view = 'admin/layouts/form';
 		$this->layout->content = $model->set('type', $type);
 	}
 
-	public function createPostAction($model) {
+	public function createPostAction($model, $type = null) {
 		$model = sq::request()->model($model);
 		if ($model->validate()) {
 			$model->save();
 		}
-		sq::response()->flash('Form saved successfully', 'success')->redirect();
+
+		sq::response()
+			->flash($this->getFlashMessage($model, 'created', $type), 'success')
+			->redirect($this->getModelURL($model, $type));
 	}
 
-	public function updateGetAction($model, $id = null, $type = null, $where = null, $value = null) {
+	public function updateGetAction($model, $id = null, $type = null) {
 		if ($id) {
 			$model = sq::model($model)->find($id);
 		} else {
-			$model = sq::model($model)->find([$where => $value]);
+			$model = sq::model($model)->find(['type' => $type]);
 		}
 
 		if ($type) {
 			$model->set('type', $type);
 		}
 
-		sq::widget('breadcrumbs')->add('Update');
+		$modelURL = $this->getModelURL($model, $type);
+		sq::widget('breadcrumbs')
+			->add($model->getTitle('plural', $type), $modelURL)
+			->add('Update');
 
 		$this->layout->view = 'admin/layouts/form';
 		$this->layout->content = $model;
 	}
 
-	public function updatePostAction($model) {
+	public function updatePostAction($model, $type = null) {
 		$model = sq::request()->model($model);
 
 		if ($model->validate()) {
 			$model->save();
 		}
 
-		sq::response()->flash('Form saved successfully', 'success')->redirect();
+		// @TODO I need a better way to handle unique actions
+		if (isset($_FILES['upload'])) {
+			sq::model('files', ['path' => $model->path])
+				->upload('upload');
+		}
+
+		if (sq::request()->post('sort-keys')) {
+			foreach (explode(',', sq::request()->post('sort-keys')) as $sort => $id) {
+				sq::model('sq_files')->update(['sort' => $sort], $id);
+			}
+		}
+
+		sq::response()
+			->flash($this->getFlashMessage($model, 'saved', $type), 'success')
+			->redirect();
 	}
 
-	public function deleteAction($model, $id) {
+	public function deleteAction($model, $id, $type = null) {
 		$model = sq::model($model)->find($id);
+		$modelURL = $this->getModelURL($model, $type);
 
 		if (sq::request()->isPost) {
+			$flashMessage = $this->getFlashMessage($model, 'deleted', $type);
+
+			// @TODO make this not a hardcoded hack
+			if (sq::request()->get('model') == 'files' && !array_key_exists('path', $_GET)) {
+				$id = sq::model('galleries')->find(['path' => dirname($id)])->id;
+				$modelURL = sq::route()->to([
+					'model' => 'galleries',
+					'action' => 'update',
+					'id' => $id
+				]);
+			}
+
 			$model->delete();
 
-			sq::response()->redirect(sq::route()->to([
-				'module' => 'admin',
-				'model' => sq::request()->get('model')
-			]));
+			sq::response()
+				->flash($flashMessage, 'success')
+				->redirect($modelURL);
 		} else {
 			$model->read();
-
-			sq::widget('breadcrumbs')->add('Delete');
+			sq::widget('breadcrumbs')
+				->add($model->getTitle('plural', $type), $modelURL)
+				->add('Delete');
 
 			$this->layout->content = sq::view('admin/confirm', ['model' => $model]);
 		}
@@ -154,6 +177,10 @@ abstract class sqAdmin extends controller {
 
 	public function passwordGetAction($id) {
 		$users = sq::model('users')->find($id);
+
+		sq::widget('breadcrumbs')
+			->add('Users', sq::route()->to(['model' => 'users']))
+			->add('Change Password');
 
 		$this->layout->content = sq::view('admin/forms/password', [
 			'model' => $users
@@ -191,19 +218,44 @@ abstract class sqAdmin extends controller {
 	/**
 	 * Loads the specified markdown file in a help page
 	 *
-	 * @param string $page The name of the markdown page to load from the
+	 * @param string $file The name of the markdown file to load from the
 	 * admin/help directory.
 	 */
-	public function helpAction($page = 'index.md') {
+	public function helpAction($file = null) {
 		sq::widget('breadcrumbs')->add('Help', sq::route()->to([
-			'module' => 'admin', 'action' => 'help']));
+			'action' => 'help']));
 
 		$parser = new MarkdownExtra;
 		$parser->url_filter_func = function($url) {
 			return sq::base().'modules/admin/help/src/'.$url;
 		};
+
+		if ($file) {
+			sq::widget('breadcrumbs')->add(ucwords(pathinfo($file, PATHINFO_FILENAME)));
+		}
+
+		$file = $file ?: 'index.md';
 		$this->layout->content = sq::view('admin/help', [
-			'content' => $parser->transform(file_get_contents(sq::root().'modules/admin/help/'.$page))
+			'content' => $parser->transform(
+				file_get_contents(sq::root().'modules/admin/help/'.$file))
 		]);
+	}
+
+	private function getModelURL($model, $type = null) {
+		$modelURL = sq::route()->to(['model' => $model->options['name']]);
+
+		if ($type) {
+			$modelURL->append(['type' => $type]);
+		}
+
+		return $modelURL;
+	}
+
+	private function getFlashMessage($model, $verb, $type = null) {
+		if (!empty($model->name)) {
+			return $model->getTitle('singular', $type).' \''.$model->name.'\' '.$verb;
+		}
+
+		return $model->getTitle('singular', $type).' '.$verb;
 	}
 }
