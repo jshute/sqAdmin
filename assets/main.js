@@ -40,7 +40,7 @@ $(function() {
 	$('.sq-picker').each(function() {
 		var selectedUrl = $(this).find('.sq-picker-input').val();
 		if (selectedUrl) {
-			$(this).find('img[src*="' + selectedUrl + '"]').addClass('is-selected');
+			$(this).find('img[data-src*="' + selectedUrl + '"]').addClass('is-selected');
 		}
 	});
 
@@ -62,7 +62,7 @@ $(function() {
 		e.preventDefault();
 		$(this).parents('.sq-picker').find('img').removeClass('is-selected');
 		$(this).addClass('is-selected');
-		$(this).parents('.sq-picker').children('input').val($(this).attr('src').replace(sq.data.base, ''));
+		$(this).parents('.sq-picker').children('input').val($(this).data('src').replace(sq.data.base, ''));
 	});
 
 	$cache.picker.on('click', '.sq-picker-folder', function(e) {
