@@ -19,9 +19,8 @@ class options extends admin {
 	}
 
 	public function indexPostAction() {
-		$model = sq::model('sq_options');
 		foreach (sq::request()->post('options') as $id => $val) {
-			$model->find($id)->save(['value' => $val]);
+			sq::model('sq_options')->find($id)->save(['value' => $val]);
 		}
 
 		sq::response()
