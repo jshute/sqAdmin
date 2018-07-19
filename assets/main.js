@@ -1,4 +1,10 @@
 $(function() {
+	function checkInput(type) {
+		var input = document.createElement('input');
+		input.setAttribute('type', type);
+		return input.type === type;
+	}
+
 	var $cache = {
 		picker: $('.sq-picker')
 	};
@@ -9,6 +15,12 @@ $(function() {
 		event.preventDefault();
 		$("body").toggleClass("open");
 	});
+
+	if (checkInput('date')) {
+		$('input[type=date]').each(function() {
+			$(this).val($(this).data('date'));
+		});
+	}
 
 	$("textarea.richtext").tinymce({
 		script_url: tinymcePath + "/tinymce.min.js",
