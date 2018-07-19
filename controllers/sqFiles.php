@@ -56,9 +56,14 @@ abstract class sqFiles extends admin {
 	public function indexAction($path = null, $where = null, $value = null) {
 		$this->layout->view = 'admin/layouts/listing';
 		if ($path) {
-			$files = sq::model('files')->search(['path' => $path])->order('type', 'ASC')->paginate();
+			$files = sq::model('files')->search(['path' => $path])->order('type', 'ASC');
 		} else {
-			$files = sq::model('files')->all()->order('type', 'ASC')->paginate();
+			$files = sq::model('files')->all()->order('type', 'ASC');
+		}
+
+		// Only paginate non-ajax requests because of file pickers
+		if (!sq::request()->isAjax) {
+			$files->paginate();
 		}
 
 		$this->layout->actions = ['upload'];
