@@ -216,18 +216,18 @@ abstract class sqAdmin extends controller {
 	}
 
 	/**
-	 * Loads the specified markdown file in a help page
+	 * Loads the specified markdown file in a content page
 	 *
-	 * @param string $file The name of the markdown file to load from the
-	 * admin/help directory.
+	 * @param string $file The name of the markdown file to load from the site
+	 * pages/ directory
 	 */
-	public function helpAction($file = null) {
-		sq::widget('breadcrumbs')->add('Help', sq::route()->to([
-			'action' => 'help']));
+	public function documentationAction($file = null) {
+		sq::widget('breadcrumbs')
+			->add('Documentation', sq::route()->to(['action' => 'documentation']));
 
 		$parser = new MarkdownExtra;
 		$parser->url_filter_func = function($url) {
-			return sq::base().'modules/admin/help/src/'.$url;
+			return sq::base().'docs/src/'.$url;
 		};
 
 		if ($file) {
@@ -235,10 +235,14 @@ abstract class sqAdmin extends controller {
 		}
 
 		$file = $file ?: 'index.md';
-		$this->layout->content = sq::view('admin/help', [
-			'content' => $parser->transform(
-				file_get_contents(sq::root().'modules/admin/help/'.$file))
-		]);
+
+		if (file_exists(sq::root().'docs/'.$file)) {
+			$this->layout->content = sq::view('admin/documentation', [
+				'content' => $parser->transform(file_get_contents(sq::root().'docs/'.$file))
+			]);
+		} else {
+			sq::error('404', 'Can not find page '.$file);
+		}
 	}
 
 	private function getModelURL($model, $type = null) {
