@@ -1,17 +1,3 @@
-#mce-content {
-	padding: 1em;
-	background: #FFF;
-	font-size: 1em;
-}
-
-#mce-content::before {
-	display: none;
-}
-
-.mce-tinymce {
-	margin-bottom: 1.5em !important;
-}
-
 * {
 	margin: 0;
 	padding: 0;
@@ -188,6 +174,7 @@ td:last-child, th:last-child {
 	bottom: 0;
 	left: 15%;
 	border-top: 1px solid #DDD;
+	z-index: 100;
 }
 
 @media screen and (max-width: 900px) {
@@ -845,7 +832,7 @@ button.sq-toggle::after {
 	overflow: hidden;
 	background: #FCFBF9;
 	width: 100%;
-	z-index: 10;
+	z-index: 100;
 	border-bottom: 1px solid #DDD;
 	padding: 0 1.4em;
 }
@@ -892,6 +879,7 @@ article img {
 
 article h2, article h3, article h4 {
 	padding-top: .8em;
+	display: block;
 }
 
 article .highlight {
@@ -900,10 +888,54 @@ article .highlight {
 	background: #EEE;
 }
 
+ul, ol {
+	padding-left: 1.5em;
+}
+
 /******************************************************************************
  * Preview link
  *****************************************************************************/
 
 .preview-link {
 	float: right;
+}
+
+/******************************************************************************
+ * Editor
+ *****************************************************************************/
+
+.richtext {
+	padding-bottom: .5em;
+}
+
+.trumbowyg {
+	clear: both;
+	margin-bottom: 1em;
+}
+
+.trumbowyg label {
+	width: auto;
+	float: none;
+}
+
+.trumbowyg button {
+	color: #333;
+}
+
+.trumbowyg button {
+	margin: 0;
+}
+
+.trumbowyg-box {
+	background: #FFF;
+}
+
+.trumbowyg-button-pane {
+	background: #EEE;
+	border-bottom: 0;
+}
+
+.trumbowyg blockquote {
+	border-left: .4em solid #C83038;
+	padding-left: 1em;
 }
