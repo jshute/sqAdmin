@@ -20,7 +20,7 @@ self::style(sq::asset('admin/vendor/trumbowyg/ui/trumbowyg.min.css'));
 self::script(sq::asset('admin/main.js'));
 
 // Mail styles and fonts
-self::style('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,700');
+self::style('//fonts.googleapis.com/css?family=Open+Sans:300italic,400,700');
 self::style(sq::asset('admin/main.css'));
 
 // Meta
