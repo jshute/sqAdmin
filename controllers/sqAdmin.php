@@ -84,6 +84,12 @@ abstract class sqAdmin extends controller {
 			->add($model->getTitle('plural', $type), $modelURL)
 			->add('Create');
 
+		// @todo Fix this hack (create general setup for default values)
+		if ($model->options['name'] == 'pages') {
+			$model->in_nav = true;
+			$model->in_footer = true;
+		}
+
 		$this->layout->view = 'admin/layouts/form';
 		$this->layout->content = $model->set('type', $type);
 	}
