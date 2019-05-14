@@ -21,7 +21,7 @@
 			$active = 'active';
 		endif;
 
-		if ($link[0] == '/' || strpos($link, 'http://') === 0):
+		if ($link[0] == '/' || strpos($link, 'http://') === 0 || strpos($link, 'https://') === 0):
 			$href = $link;
 		endif;
 
