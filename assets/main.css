@@ -289,8 +289,20 @@ input[type=text], input[type=password], input[type=email], input[type=date], tex
 	width: 35em;
 }
 
-input.currency {
-	width: 5em;
+input.sq-error {
+	border: 1px solid #C6323C;
+}
+
+.sq-error-message {
+	color: #C6323C;
+	float: left;
+	width: 85%;
+	font-size: .8em;
+	margin: .3em 0 1.8em 15%;
+}
+
+.sq-error-message + .sq-help-text {
+	display: none;
 }
 
 textarea {
@@ -309,6 +321,15 @@ textarea {
 	height: 7.5em;
 	max-width: 700px;
 	resize: none;
+}
+
+.sq-input-currency {
+	max-width: 5em;
+}
+
+.sq-input-color {
+	font-family: monospace;
+	max-width: 5em;
 }
 
 .sq-list-actions {
@@ -584,7 +605,6 @@ button.sq-toggle::after {
 /******************************************************************************
  * Hierarchy Indentation
  *****************************************************************************/
-
 
 .sq-indent td:first-child {
 	padding-left: 30px;
@@ -892,6 +912,7 @@ ul, ol {
 	padding-left: 1.5em;
 }
 
+
 /******************************************************************************
  * Preview link
  *****************************************************************************/
@@ -899,6 +920,7 @@ ul, ol {
 .preview-link {
 	float: right;
 }
+
 
 /******************************************************************************
  * Editor

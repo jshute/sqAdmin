@@ -96,9 +96,14 @@ abstract class sqAdmin extends controller {
 
 	public function createPostAction($model, $type = null) {
 		$model = sq::request()->model($model);
-		if ($model->validate()) {
-			$model->save();
+
+		if (!$model->validate()) {
+			return sq::response()
+				->flash('Validation errors occured', 'error')
+				->review();
 		}
+
+		$model->save();
 
 		sq::response()
 			->flash($this->getFlashMessage($model, 'created', $type), 'success')
@@ -128,9 +133,13 @@ abstract class sqAdmin extends controller {
 	public function updatePostAction($model, $type = null) {
 		$model = sq::request()->model($model);
 
-		if ($model->validate()) {
-			$model->save();
+		if (!$model->validate()) {
+			return sq::response()
+				->flash('Validation errors occured', 'error')
+				->review();
 		}
+
+		$model->save();
 
 		// @TODO I need a better way to handle unique actions
 		if (isset($_FILES['upload'])) {
