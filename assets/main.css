@@ -593,7 +593,7 @@ button.sq-toggle::after {
 }
 
 .sq-toggle.is-open + div {
-	max-height: 500px;
+	max-height: 800px;
 	opacity: 1;
 }
 
